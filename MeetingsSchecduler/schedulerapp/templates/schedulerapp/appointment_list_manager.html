@@ -1,0 +1,43 @@
+{% load custom_tags %}
+
+{% for app in appointments  %}
+<tr id="appointment-{{ app.pk }}" class="appointment-row">
+  <td>{{ forloop.counter }}</td>
+  <td>
+    {{app.guest.rank|add:" "|add:app.guest.first_name|add:" "|add:app.guest.last_name }}
+  </td>
+  <td style=" background-color: {{ StatusColor|get_color:app.status }} ">
+    {{app.status}}
+  </td>
+  <td>
+    {{app.purpose}}
+  </td>
+  <td>
+    {{app.comming_date}}
+  </td>
+  
+  <td>
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+      
+      <button type="button" class="btn " style="background-color:#198754;color:#fbe5e7;"  
+      hx-get="{% url 'edit_appointment_status' pk=app.pk status="دخول" %}"
+      hx-target="#dialog" >دخول</button>
+      
+      <button type="button" class="btn " style="background-color:#ffc107;color:#322601;" 
+      hx-get="{% url 'edit_appointment_status' pk=app.pk status="إنتظار" %}"
+      hx-target="#dialog">إنتظار</button>  
+      
+      <button type="button" class="btn " style="background-color:#adb5bd;color:#322601;"   
+      hx-get="{% url 'edit_appointment_status' pk=app.pk status="تأجيل" %}"
+      hx-target="#dialog"> تأجيل</button>
+      
+      <button type="button" class="btn " style="background-color:#dc3545;color:#fbe5e7;"    
+      hx-get="{% url 'edit_appointment_status' pk=app.pk status="إلغاء" %}"
+      hx-target="#dialog">إلغاء</button>  
+      
+    </div>
+    
+    
+    </td>
+</tr>
+{%endfor%}

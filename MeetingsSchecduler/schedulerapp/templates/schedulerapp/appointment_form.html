@@ -1,0 +1,44 @@
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% with WIDGET_ERROR_CLASS='is-invalid' %}
+<form hx-post="{{ request.path }}" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' class="modal-content">
+    <div class="modal-header">
+        {% if appointment %}
+        <h5 class="modal-title">تعديل مقابلة</h5>
+        {%else%}
+        <h5 class="modal-title">اضافة مقابلة جديدة</h5>
+        {% endif %}
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <label for="{{ form.guest.id_for_label }}" class="form-label">الزائر</label>
+            {% render_field form.guest class="form-control" %}
+            <div class="invalid-feedback">{{ form.title.errors|first }}</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.status.id_for_label }}" class="form-label">الحالة</label>
+            {% render_field form.status class="form-control" %}
+            <div class="invalid-feedback">{{ form.rating.errors|first }}</div>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.purpose.id_for_label }}" class="form-label">الغرض من الزيارة</label>
+            {% render_field form.purpose class="form-control" %}
+            <div class="invalid-feedback">{{ form.rating.errors|first }}</div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        {% if appointment %}
+        <button type="button" class="btn btn-danger" hx-post="{% url 'remove_appointment' pk=appointment.pk %}"
+            hx-confirm="هل انت متأكد من الحذف">حذف</button>
+        <span class="flex-grow-1"></span>
+        {% endif %}
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            الغاء
+        </button>
+        <button type="submit" class="btn btn-primary">حفظ</button>
+    </div>
+</form>
+{% endwith %}

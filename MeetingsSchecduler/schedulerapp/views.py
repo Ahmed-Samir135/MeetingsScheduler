@@ -5,4 +5,9 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return HttpResponse("hellllllo dfsgjljkljkjkjkdfsanklmkm");
+    """ if request.user.is_secretary:
+        temp = "schedulerapp/index_secretary.html"
+    else:
+        temp = "schedulerapp/index_manager.html"
+    return render(request, temp) """
