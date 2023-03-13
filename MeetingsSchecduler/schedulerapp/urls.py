@@ -16,6 +16,29 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from . import views
-urlpatterns = [
-    path('',views.index,name='index'),
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import views as auth_views
+
+urlpatterns = [ 
+    path(
+        "",
+        login_required(views.index),
+        name="home",
+    ),
+    path(
+        "login/",
+        auth_views.LoginView.as_view(template_name="users/login.html"),
+        name="login",
+    ),
+    path(
+        "appointment",
+        views.appointment_list,
+        name="appointment_list",
+    ),
+    path(
+        "logout/",
+        auth_views.LogoutView.as_view(template_name="users/logout.html"),
+        name="logout",
+    ),
+    path("profile/", views.profile, name="profile"),
 ]

@@ -6,7 +6,7 @@ class User(AbstractUser):
     is_manager = models.BooleanField(default=False)
     is_secretary = models.BooleanField(default=False)
     def __str__(self):
-        return self.rank + " / " + self.first_name + " " + self.last_name
+        return self.first_name + " " + self.last_name
 
 class Manager(TimeStampedModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
